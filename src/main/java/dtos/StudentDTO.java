@@ -8,12 +8,18 @@ public class StudentDTO implements Serializable {
     private String password;
     private String name;
     private String email;
+    private String courseName;
+    private int courseCode;
 
-    public StudentDTO(String username, String password, String name, String email) {
+    public StudentDTO() {}
+
+    public StudentDTO(String username, String password, String name, String email, String courseName, int courseCode) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
+        this.courseName = courseName;
+        this.courseCode = courseCode;
     }
 
     public String getUsername() {
@@ -46,5 +52,21 @@ public class StudentDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public int getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(int courseCode) {
+        this.courseCode = courseCode;
     }
 }
