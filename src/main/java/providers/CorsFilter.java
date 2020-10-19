@@ -14,7 +14,7 @@ public class CorsFilter implements ContainerResponseFilter {
         // In a production environment, it’s a security risk.
         // You may only specify the servers you allow to communicate.
         // Eg: to communicate only with NUXT ("Access-Control-Allow-Origin", "localhost:3000")
-        responseContext.getHeaders().add("Access-Control-Allow-Origin", "http://localhost:8081");
+        responseContext.getHeaders().add("Access-Control-Allow-Origin", "http://localhost");
         // important to pass in the preflight browser request
         // note: you enabled this option in the nuxt.config.js (NUXT Web App)
         // axios: {

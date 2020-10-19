@@ -11,7 +11,8 @@ import javax.persistence.CascadeType;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 
 @Entity
 @Table(
@@ -31,17 +32,21 @@ public class Course implements Serializable {
     @NotNull
     private String name;
     @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
-    private Collection<Student> students;
+    private final Collection<Student> students;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
+    private final Collection<Subject> subjects;
 
     public Course() {
-        students = new LinkedList<>();
+        students = new LinkedHashSet<>();
+        subjects = new LinkedHashSet<>();
         System.out.println("Default constructor Course initialized!");
     }
 
     public Course(int id, String name) {
         this.id = id;
         this.name = name;
-        students = new LinkedList<>();
+        this.students = new LinkedHashSet<>();
+        this.subjects = new LinkedHashSet<>();
 
         System.out.println("Course Created!");
     }
@@ -62,17 +67,41 @@ public class Course implements Serializable {
         this.name = name;
     }
 
-    public Collection<Student> getStudents() {
-        return students;
+    public LinkedHashSet<Student> getStudents() {
+        return new LinkedHashSet<>(students);
     }
 
-    public Student addStudent(Student student) {
-        students.add(student);
-        return student;
+    public boolean addStudent(Student student) {
+        return students.add(student);
     }
 
-    public Student removeStudent(Student student) {
-        students.remove(student);
-        return student;
+    public boolean removeStudent(Student student) {
+        return students.remove(student);
+    }
+
+    public LinkedHashSet<Subject> getSubjects() {
+        return new LinkedHashSet<>(subjects);
+    }
+
+    public boolean addSubject(Subject subject) {
+        return this.subjects.add(subject);
+    }
+
+    public Subject removeSubject(Subject subject) {
+        this.subjects.remove(subject);
+        return subject;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return getId() == course.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

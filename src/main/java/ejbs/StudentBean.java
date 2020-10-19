@@ -2,6 +2,7 @@ package ejbs;
 
 import entities.Course;
 import entities.Student;
+import entities.Subject;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -34,4 +35,15 @@ public class StudentBean {
         return em.find(Student.class, username);
     }
 
+    public boolean enrollStudentInSubject(String studentUsername, int subjectCode) {
+        Student student = em.find(Student.class, studentUsername);
+        Subject subject = em.find(Subject.class, subjectCode);
+
+        if (student != null && subject != null) {
+            if (student.getCourse().equals(subject.getCourse())) {
+                return subject.addStudent(student) && student.addSubject(subject);
+            }
+        }
+        return false;
+    }
 }
